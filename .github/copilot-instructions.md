@@ -40,3 +40,14 @@ You are an expert Backend Architect specializing in PHP 8.3+, Symfony 7+, and Di
 - **NO Shared Databases:** Do not suggest cross-service SQL joins.
 - **NO Annotations:** Strictly use PHP Attributes.
 - **NO Global State:** Do not use static properties for storing state.
+
+## Local Validation Required For Copilot Agent Changes
+- Any change created by Copilot in this repository must include local validation before finishing work.
+- Run from this repository:
+	- `composer run lint:phpcs`
+	- `composer run lint:phpstan`
+	- `composer run test`
+- If available and relevant for the changed scope, prefer `composer run quality` as the consolidated check.
+- For every backend-related change, Copilot must also run cross-repo smoke tests from `my-dashboard-backend`:
+	- `bash ./helper-scripts/smoke.sh`
+- Do not mark work as completed when any of the commands above fails.
