@@ -25,19 +25,16 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: Install CI quality tools
-        run: composer require --dev --no-interaction --no-progress squizlabs/php_codesniffer phpstan/phpstan phpunit/phpunit
-
       - name: Run PHPCS
-        run: vendor/bin/phpcs --standard=PSR12 src
+        run: composer run lint:phpcs
 
       - name: Run PHPStan
-        run: vendor/bin/phpstan analyse src --level=6 --no-progress
+        run: composer run lint:phpstan
 
       - name: Run unit tests
         run: |
           if [ -d tests ] && [ "$(find tests -name '*Test.php' | wc -l)" -gt 0 ]; then
-            vendor/bin/phpunit
+            composer run test
           else
             echo "No unit tests found in this repository."
           fi
