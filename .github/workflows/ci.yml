@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  quality-and-unit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Install CI quality tools
+        run: composer require --dev --no-interaction --no-progress squizlabs/php_codesniffer phpstan/phpstan phpunit/phpunit
+
+      - name: Run PHPCS
+        run: vendor/bin/phpcs --standard=PSR12 src
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse src --level=6 --no-progress
+
+      - name: Run unit tests
+        run: |
+          if [ -d tests ] && [ "$(find tests -name '*Test.php' | wc -l)" -gt 0 ]; then
+            vendor/bin/phpunit
+          else
+            echo "No unit tests found in this repository."
+          fi
