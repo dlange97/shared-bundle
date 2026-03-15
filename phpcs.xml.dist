@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="MyDashboard Shared Bundle">
+  <description>PHPCS rules for shared-bundle</description>
+
+  <rule ref="PSR12"/>
+
+  <file>src</file>
+
+  <arg name="basepath" value="."/>
+  <arg value="p"/>
+</ruleset>

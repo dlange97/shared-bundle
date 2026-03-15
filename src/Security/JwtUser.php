@@ -6,8 +6,12 @@ namespace MyDashboard\Shared\Security;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 
-class JwtUser implements JWTUserInterface
+final class JwtUser implements JWTUserInterface
 {
+    /**
+     * @param list<string> $roles
+     * @param list<string> $permissions
+     */
     public function __construct(
         private readonly string $userId,
         private readonly string $email,
@@ -15,11 +19,13 @@ class JwtUser implements JWTUserInterface
         private readonly ?string $lastName,
         private readonly array $roles,
         private readonly array $permissions,
-    ) {}
+    ) {
+    }
 
-    public static function createFromPayload($username, array $payload): static
+    /** @param array<string, mixed> $payload */
+    public static function createFromPayload($username, array $payload): self
     {
-        return new static(
+        return new self(
             userId: (string) ($payload['id'] ?? ''),
             email: $username,
             firstName: $payload['firstName'] ?? null,
@@ -42,7 +48,9 @@ class JwtUser implements JWTUserInterface
         return array_values(array_unique($roles));
     }
 
-    public function eraseCredentials(): void {}
+    public function eraseCredentials(): void
+    {
+    }
 
     public function getUserId(): string
     {

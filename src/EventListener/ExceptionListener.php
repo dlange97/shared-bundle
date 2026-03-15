@@ -19,7 +19,9 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
  */
 readonly class ExceptionListener
 {
-    public function __construct(private LoggerInterface $logger) {}
+    public function __construct(private LoggerInterface $logger)
+    {
+    }
 
     public function onKernelException(ExceptionEvent $event): void
     {
