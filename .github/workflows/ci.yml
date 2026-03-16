@@ -38,3 +38,6 @@ jobs:
           else
             echo "No unit tests found in this repository."
           fi
+
+  cross-repo-smoke:
+    uses: dlange97/helper-scripts/.github/workflows/smoke.yml@develop
