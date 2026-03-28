@@ -1,5 +1,25 @@
 /vendor/
 
+# Environment files
+/.env.dev
+/.env.test
+/.env.local
+/.env.*.local
+
 # IDE / Editor
 /.idea/
 /.vscode/
+*.swp
+*.swo
+*.bak
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# PHPUnit
+/phpunit.xml
+/.phpunit.cache/
