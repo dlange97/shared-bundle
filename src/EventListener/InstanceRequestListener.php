@@ -17,7 +17,9 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 readonly class InstanceRequestListener
 {
     /** @param list<string> $bypassPaths Path prefixes that do NOT require an instance ID */
-    public function __construct(private array $bypassPaths = []) {}
+    public function __construct(private array $bypassPaths = [])
+    {
+    }
 
     public function onKernelRequest(RequestEvent $event): void
     {

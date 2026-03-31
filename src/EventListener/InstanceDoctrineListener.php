@@ -16,7 +16,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 readonly class InstanceDoctrineListener
 {
-    public function __construct(private RequestStack $requestStack) {}
+    public function __construct(private RequestStack $requestStack)
+    {
+    }
 
     public function prePersist(PrePersistEventArgs $args): void
     {
