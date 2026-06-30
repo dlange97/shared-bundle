@@ -22,6 +22,8 @@ use Symfony\Component\RateLimiter\RateLimiterFactory;
  */
 abstract class RateLimitSubscriber implements EventSubscriberInterface
 {
+    private const DEFAULT_RETRY_AFTER_SECONDS = 60;
+
     /**
      * Path prefixes that are completely exempt from rate limiting (e.g. health checks).
      *
@@ -83,7 +85,7 @@ abstract class RateLimitSubscriber implements EventSubscriberInterface
             $this->logBlockedRequest($request, $isSensitive);
 
             $retryAfter = $limit->getRetryAfter();
-            $retryIn    = $retryAfter !== null ? max(0, $retryAfter->getTimestamp() - time()) : 60;
+            $retryIn    = $retryAfter !== null ? max(0, $retryAfter->getTimestamp() - time()) : self::DEFAULT_RETRY_AFTER_SECONDS;
 
             $event->setResponse(new JsonResponse(
                 [
