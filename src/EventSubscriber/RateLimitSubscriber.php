@@ -83,7 +83,7 @@ abstract class RateLimitSubscriber implements EventSubscriberInterface
             $this->logBlockedRequest($request, $isSensitive);
 
             $retryAfter = $limit->getRetryAfter();
-            $retryIn    = $retryAfter !== null ? max(0, $retryAfter->getTimestamp() - time()) : 60;
+            $retryIn    = max(0, $retryAfter->getTimestamp() - time());
 
             $event->setResponse(new JsonResponse(
                 [
